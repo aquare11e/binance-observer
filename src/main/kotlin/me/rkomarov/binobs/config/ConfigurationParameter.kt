@@ -1,7 +1,11 @@
 package me.rkomarov.binobs.config
 
 enum class ConfigurationParameter(val default: String?) {
-    CRON_EXPRESSION("/30 * * * *"),
+    PROPOSAL_REQUESTS_CRON_EXPRESSION("/30 * * * *"),
+    PROBES_CRON_EXPRESSION("/10 * * * *"),
+
+    LIVENESS_PROBES_FILE("/tmp/live"),
+    READINESS_PROBE_FILE("/tmp/ready"),
 
     INFLUXDB_URL("http://localhost:8086"),
     INFLUXDB_TOKEN(null),

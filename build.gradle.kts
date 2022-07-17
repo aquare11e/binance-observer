@@ -1,9 +1,10 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     kotlin("jvm") version "1.7.10"
     kotlin("plugin.serialization") version "1.7.10"
-
 }
 
 group = "me.rkomarov"
@@ -41,4 +42,21 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks {
+    named<ShadowJar>("shadowJar") {
+        archiveFileName.set("binobs.jar")
+        destinationDirectory.set(File("build/fatjar"))
+        mergeServiceFiles()
+        manifest {
+            attributes(mapOf("Main-Class" to "me.rkomarov.binobs.MainKt"))
+        }
+    }
+}
+
+tasks {
+    build {
+        dependsOn(shadowJar)
+    }
 }
