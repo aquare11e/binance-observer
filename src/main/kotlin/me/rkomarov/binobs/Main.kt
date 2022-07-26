@@ -1,6 +1,7 @@
 package me.rkomarov.binobs
 
 import dev.inmo.krontab.doInfinity
+import dev.inmo.krontab.doOnce
 import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -54,9 +55,11 @@ suspend fun startProposalsRequests(
 }
 
 suspend fun startProbes() {
-    withContext(Dispatchers.IO) {
-        File(Configuration[READINESS_PROBE_FILE]).createNewFile()
-        logger.debug { "Readiness probe created" }
+    doOnce(Configuration[PROBES_CRON_EXPRESSION]) {
+        withContext(Dispatchers.IO) {
+            File(Configuration[READINESS_PROBE_FILE]).createNewFile()
+            logger.debug { "Readiness probe file created" }
+        }
     }
 
     doInfinity(Configuration[PROBES_CRON_EXPRESSION]) {

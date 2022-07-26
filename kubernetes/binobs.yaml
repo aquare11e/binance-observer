@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: observers
+  name: binobs-app-deployment
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      project: binance-observer
+      app: binobs
+  template:
+    metadata:
+      namespace: observers
+      labels:
+        project: binance-observer
+        app: binobs
+    spec:
+      containers:
+        - name: binobs-app
+          image: TODO
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - /tmp/ready
+                - &&
+                - rm
+                - /tmp/ready
+          livenessProbe:
+            exec:
+              command:
+                - cat
+                - /tmp/live
+                - &&
+                - rm
+                - /tmp/live
+          resources:
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
