@@ -57,6 +57,9 @@ jobs:
           key: jar-package
           path: build/fatjar/*
 
+      - name: Set project env
+        run: echo "project" >> $DIR
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
