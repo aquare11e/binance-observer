@@ -57,8 +57,19 @@ jobs:
           key: jar-package
           path: build/fatjar/*
 
+      - name: Print files (A)
+        shell: bash
+        run: |
+          ls .
+          echo "SPACE"
+          ls build
+          echo "SPACE"
+          ls build/fatjar
+          echo "SPACE"
+          ls project
+
       - name: Set project env
-        run: echo "DIR=project" >> $GITHUB_ENV
+        run: echo "DIR=./build/fatjar" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
