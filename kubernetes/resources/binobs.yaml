@@ -29,19 +29,11 @@ spec:
           readinessProbe:
             exec:
               command:
-                - cat
-                - /tmp/ready
-                - &&
-                - rm
-                - /tmp/ready
+                - cat /tmp/ready && rm /tmp/ready
           livenessProbe:
             exec:
               command:
-                - cat
-                - /tmp/live
-                - &&
-                - rm
-                - /tmp/live
+                - cat /tmp/live && rm /tmp/live
           resources:
             limits:
               memory: "100Mi"
