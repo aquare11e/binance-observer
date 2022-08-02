@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: observers
-  name: binobs-app-deployment
+  name: binobs-app
 spec:
   replicas: 1
   strategy:
@@ -20,7 +20,12 @@ spec:
     spec:
       containers:
         - name: binobs-app
-          image: TODO
+          image: docker.io/aquare11e/binobs:latest
+          envFrom:
+          - secretRef:
+              name: binobs-creds
+          - configMapRef:
+              name: binobs-configmap
           readinessProbe:
             exec:
               command:

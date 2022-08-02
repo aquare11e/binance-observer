@@ -7,7 +7,7 @@ enum class ConfigurationParameter(val default: String?) {
     LIVENESS_PROBES_FILE("/tmp/live"),
     READINESS_PROBE_FILE("/tmp/ready"),
 
-    INFLUXDB_URL("http://localhost:8086"),
+    INFLUXDB_URL("http://influxdb:8086"),
     INFLUXDB_TOKEN(null),
     INFLUXDB_ORG("binobs"),
     INFLUXDB_BUCKET("binobs"),
