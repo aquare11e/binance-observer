@@ -5,7 +5,6 @@ enum class ConfigurationParameter(val default: String?) {
     PROBES_CRON_EXPRESSION("/10 * * * *"),
 
     LIVENESS_PROBES_FILE("/tmp/live"),
-    READINESS_PROBE_FILE("/tmp/ready"),
 
     INFLUXDB_URL("http://influxdb:8086"),
     INFLUXDB_TOKEN(null),
