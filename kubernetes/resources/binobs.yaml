@@ -27,13 +27,17 @@ spec:
           - configMapRef:
               name: binobs-configmap
           readinessProbe:
+            initialDelaySeconds: 20
             exec:
               command:
-                - cat /tmp/ready && rm /tmp/ready
+                - rm
+                - /tmp/ready
           livenessProbe:
+            initialDelaySeconds: 20
             exec:
               command:
-                - cat /tmp/live && rm /tmp/live
+                - rm
+                - /tmp/live
           resources:
             limits:
               memory: "100Mi"

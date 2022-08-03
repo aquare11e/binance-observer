@@ -1,3 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: observers-ingress
+  namespace: observers
+  annotations:
+    cert-manager.io/cluster-issuer: ${CERT_MANAGER_ISSUER}
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ${HOST_URL}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana-svc
+                port:
+                  number: 3000
+  tls:
+    - hosts:
+        - ${HOST_URL}
+      secretName: observers-tls-cert
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -10,29 +35,3 @@ spec:
   issuerRef:
     name: ${CERT_MANAGER_ISSUER}
     kind: ClusterIssuer
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: observers-ingress
-  namespace: observers
-  annotations:
-    cert-manager.io/cluster-issuer: ${CERT_MANAGER_ISSUER}
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: ${HOST_URL}
-      http:
-        paths:
-          - path: /grafana(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: grafana-svc
-                port:
-                  number: 3000
-  tls:
-    - hosts:
-        - ${HOST_URL}
-      secretName: observers-tls-cert
