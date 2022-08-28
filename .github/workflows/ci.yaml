@@ -44,7 +44,7 @@ jobs:
       - name: Cache Jar-package
         uses: actions/cache@v3
         with:
-          key: jar-package
+          key: jar-package-${{github.run_number}}
           path: build/fatjar/*
 
   docker:
@@ -58,7 +58,7 @@ jobs:
       - name: Cache Jar-package
         uses: actions/cache@v3
         with:
-          key: jar-package
+          key: jar-package-${{github.run_number}}
           path: build/fatjar/*
 
       - name: Set up Docker Buildx
