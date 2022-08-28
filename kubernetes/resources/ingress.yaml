@@ -22,16 +22,3 @@ spec:
     - hosts:
         - ${HOST_URL}
       secretName: observers-tls-cert
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: observers-cert
-  namespace: observers
-spec:
-  dnsNames:
-    - ${HOST_URL}
-  secretName: observers-tls-cert
-  issuerRef:
-    name: ${CERT_MANAGER_ISSUER}
-    kind: ClusterIssuer
