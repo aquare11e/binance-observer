@@ -1,0 +1,23 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: binobs-configmap
+  namespace: observers
+data:
+  PROPOSAL_REQUESTS_CRON_EXPRESSION: /30 * * * *
+  PROBES_CRON_EXPRESSION: /10 * * * *
+  LIVENESS_PROBES_FILE: /tmp/live
+  READINESS_PROBE_FILE: /tmp/ready
+  INFLUXDB_URL: http://influxdb-svc:8086
+  INFLUXDB_ORG: binobs
+  INFLUXDB_BUCKET: binobs
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: influxdb-configmap
+  namespace: observers
+data:
+  DOCKER_INFLUXDB_INIT_MODE: setup
+  DOCKER_INFLUXDB_INIT_ORG: binobs
+  DOCKER_INFLUXDB_INIT_BUCKET: binobs

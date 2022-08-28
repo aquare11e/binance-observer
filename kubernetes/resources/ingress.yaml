@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: observers-ingress
+  namespace: observers
+  annotations:
+    cert-manager.io/cluster-issuer: ${CERT_MANAGER_ISSUER}
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ${HOST_URL}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana-svc
+                port:
+                  number: 3000
+  tls:
+    - hosts:
+        - ${HOST_URL}
+      secretName: observers-tls-cert

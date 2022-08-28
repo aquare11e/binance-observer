@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: observers
-  name: binobs-app-deployment
+  name: binobs-app
 spec:
   replicas: 1
   strategy:
@@ -20,23 +20,19 @@ spec:
     spec:
       containers:
         - name: binobs-app
-          image: TODO
-          readinessProbe:
-            exec:
-              command:
-                - cat
-                - /tmp/ready
-                - &&
-                - rm
-                - /tmp/ready
+          image: docker.io/aquare11e/binobs:latest
+          envFrom:
+          - secretRef:
+              name: binobs-creds
+          - configMapRef:
+              name: binobs-configmap
           livenessProbe:
+            initialDelaySeconds: 20
             exec:
               command:
-                - cat
-                - /tmp/live
-                - &&
-                - rm
-                - /tmp/live
+                - sh
+                - -c
+                - rm /tmp/live
           resources:
             limits:
               memory: "100Mi"

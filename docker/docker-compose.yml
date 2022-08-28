@@ -22,7 +22,7 @@ services:
     tty: true
 
   grafana:
-    image: grafana/grafana-oss:9.0.3
+    image: grafana/grafana-oss:9.0.5
     container_name: binobs-grafana
     volumes:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini

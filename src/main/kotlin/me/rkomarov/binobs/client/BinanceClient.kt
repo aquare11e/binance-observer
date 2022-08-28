@@ -24,7 +24,7 @@ class BinanceClient(jsonMapper: Json) {
     private val logger = KotlinLogging.logger {}
 
     suspend fun getProposals(): ProposalResponse {
-        val response = client.post("${Companion.BINANCE_API_URL}/bapi/c2c/v2/friendly/c2c/adv/search") {
+        val response = client.post("${BINANCE_API_URL}/bapi/c2c/v2/friendly/c2c/adv/search") {
             contentType(ContentType.Application.Json)
             setBody(ProposalRequest())
         }

@@ -33,6 +33,8 @@ spec:
         - envFrom:
             - secretRef:
                 name: influxdb-creds
+            - configMapRef:
+                name: influxdb-configmap
           image: docker.io/influxdb:2.3-alpine
           name: influxdb
           volumeMounts:
@@ -46,7 +48,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: influxdb
+  name: influxdb-svc
   namespace: observers
   labels:
     app: influxdb
