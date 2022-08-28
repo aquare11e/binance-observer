@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class ProposalRequest(
     val page: Int = 1,
     val rows: Int = 20,
-    val payTypes: List<String> = listOf("Tinkoff"),
+    val payTypes: List<String> = listOf("TinkoffNew"),
     val countries: List<String> = listOf(),
     val publisherType: String = "merchant",
     val transAmount: Double = 500.0,
