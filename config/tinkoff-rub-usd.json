@@ -1,0 +1,14 @@
+{
+  "bucketName": "tinkoff-rub-usd",
+  "paymentTypes": ["TinkoffNew"],
+  "fiatOne": {
+    "fiat": "RUB",
+    "amount": 10000.0
+  },
+  "fiatTwo": {
+    "fiat": "USD",
+    "amount": 500.0
+  },
+  "asset": "USDT",
+  "tradeType": "BUY"
+}

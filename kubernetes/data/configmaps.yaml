@@ -4,7 +4,7 @@ metadata:
   name: binobs-configmap
   namespace: observers
 data:
-  PROPOSAL_REQUESTS_CRON_EXPRESSION: /30 * * * *
+  OFFERS_REQUESTS_CRON_EXPRESSION: /30 * * * *
   PROBES_CRON_EXPRESSION: /10 * * * *
   LIVENESS_PROBES_FILE: /tmp/live
   READINESS_PROBE_FILE: /tmp/ready
