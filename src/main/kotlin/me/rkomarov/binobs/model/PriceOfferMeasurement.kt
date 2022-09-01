@@ -4,8 +4,8 @@ import com.influxdb.annotations.Column
 import com.influxdb.annotations.Measurement
 import java.time.Instant
 
-@Measurement(name = "proposal")
-data class ProposalPriceMeasurement(
+@Measurement(name = "price_offer")
+data class PriceOfferMeasurement(
     @Column(name = "price")
     val price: Double,
 
@@ -19,7 +19,7 @@ data class ProposalPriceMeasurement(
     val time: Instant
 )
 
-fun Proposal.toPriceMeasurement(time: Instant = Instant.now()) = ProposalPriceMeasurement(
+fun Offer.toPriceOfferMeasurement(time: Instant = Instant.now()) = PriceOfferMeasurement(
     adv.price,
     adv.surplusAmount,
     advertiser.nickName,

@@ -2,37 +2,34 @@ package me.rkomarov.binobs.client
 
 import com.influxdb.client.domain.WritePrecision
 import com.influxdb.client.kotlin.InfluxDBClientKotlinFactory
-import java.time.Instant
-import me.rkomarov.binobs.config.Configuration
-import me.rkomarov.binobs.config.ConfigurationParameter
-import me.rkomarov.binobs.model.ProposalResponse
-import me.rkomarov.binobs.model.toPriceMeasurement
+import me.rkomarov.binobs.config.environment.EnvConfiguration
+import me.rkomarov.binobs.config.environment.EnvConfigurationParameter
 import mu.KotlinLogging
 
 class InfluxdbClient(
-    influxdbUrl: String = Configuration[ConfigurationParameter.INFLUXDB_URL],
-    influxdbToken: CharArray = Configuration[ConfigurationParameter.INFLUXDB_TOKEN].toCharArray(),
-    influxdbOrg: String = Configuration[ConfigurationParameter.INFLUXDB_ORG],
-    influxdbBucket: String = Configuration[ConfigurationParameter.INFLUXDB_BUCKET]
+    influxdbUrl: String = EnvConfiguration[EnvConfigurationParameter.INFLUXDB_URL],
+    influxdbToken: CharArray = EnvConfiguration[EnvConfigurationParameter.INFLUXDB_TOKEN].toCharArray(),
+    influxdbOrg: String = EnvConfiguration[EnvConfigurationParameter.INFLUXDB_ORG]
 ) {
+    private val logger = KotlinLogging.logger {}
 
     private val client = InfluxDBClientKotlinFactory.create(
         influxdbUrl,
         influxdbToken,
-        influxdbOrg,
-        influxdbBucket
+        influxdbOrg
     ).getWriteKotlinApi()
 
-    private val logger = KotlinLogging.logger {}
+    suspend fun <M> sendMeasurements(measurements: List<M>, bucket: String) {
+        if (measurements.isEmpty()) {
+            return
+        }
 
-    suspend fun sendProposals(proposal: ProposalResponse) {
-        logger.debug { "Try to write data to database" }
+        logger.debug { "Try to write data to database (bucket: $bucket)" }
+        client.writeMeasurements(measurements, WritePrecision.NS, bucket)
+    }
 
-        val currentTime = Instant.now()
-        val proposalPriceMeasurements = proposal.data
-            .filter { it.advertiser.monthOrderCount > 100 }
-            .map { it.toPriceMeasurement(currentTime) }
-
-        client.writeMeasurements(proposalPriceMeasurements, WritePrecision.NS)
+    suspend fun <M> sendMeasurement(measurement: M, bucket: String) {
+        logger.debug { "Try to write data to database (bucket: $bucket)" }
+        client.writeMeasurement(measurement, WritePrecision.NS, bucket)
     }
 }

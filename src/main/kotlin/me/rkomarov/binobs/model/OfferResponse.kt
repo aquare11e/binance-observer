@@ -3,20 +3,20 @@ package me.rkomarov.binobs.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProposalResponse(
-    val data: List<Proposal>
+data class OfferResponse(
+    val data: List<Offer>
 )
 
 @Serializable
-data class Proposal(
+data class Offer(
     val adv: Advert,
     val advertiser: Advertiser
 )
 
 @Serializable
 data class Advert(
-    val asset: Asset,
-    val fiatUnit: FiatUnit,
+    val asset: String,
+    val fiatUnit: String,
     val price: Double,
     val surplusAmount: Double
 )
@@ -27,6 +27,6 @@ data class Advertiser(
     val monthOrderCount: Int
 )
 
-enum class Asset { USDT }
-enum class FiatUnit { USD }
+//enum class Asset { USDT }
+//enum class FiatUnit { USD }
 

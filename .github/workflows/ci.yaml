@@ -1,5 +1,11 @@
 name: CI/CD pipeline
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 env:
   NAMESPACE: observers
@@ -36,12 +42,14 @@ jobs:
           arguments: build --scan
 
       - name: Create Jar-package
+        if: github.event_name != 'pull_request'
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: wrapper
           arguments: shadowJar
 
       - name: Cache Jar-package
+        if: github.event_name != 'pull_request'
         uses: actions/cache@v3
         with:
           key: jar-package-${{github.run_number}}
@@ -50,6 +58,7 @@ jobs:
   docker:
     name: Build image and push to Dockerhub
     runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
     needs: [build]
     steps:
       - name: Checkout to branch
