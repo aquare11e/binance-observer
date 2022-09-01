@@ -35,8 +35,15 @@ spec:
                 - rm /tmp/live
           resources:
             limits:
-              memory: "100Mi"
+              memory: "200Mi"
               cpu: "100m"
             requests:
               memory: "100Mi"
               cpu: "100m"
+          volumeMounts:
+            - name: configs-mount
+              mountPath: /config
+      volumes:
+        - name: configs-mount
+          configMap:
+            name: binobs-config-file
